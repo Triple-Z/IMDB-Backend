@@ -20,6 +20,20 @@
                 - [Response](#response-3)
             - [Delete a title](#delete-a-title)
                 - [Response](#response-4)
+        - [Names](#names)
+            - [List names](#list-names)
+                - [Parameters](#parameters-3)
+                - [Response](#response-5)
+            - [Get a name](#get-a-name)
+                - [Response](#response-6)
+            - [Create a name](#create-a-name)
+                - [Parameters](#parameters-4)
+                - [Response](#response-7)
+            - [Update a name](#update-a-name)
+                - [Parameters](#parameters-5)
+                - [Response](#response-8)
+            - [Delete a name](#delete-a-name)
+                - [Response](#response-9)
 
 <!-- /TOC -->
 
@@ -164,6 +178,8 @@ Status: 200 OK
 }
 ```
 
+> 若页号为 `-1`，代表该页不可用。
+
 #### Get a title
 
 ```api
@@ -306,6 +322,253 @@ Status: 200 OK
 
 ```api
 DELETE /api/v1/titles/:id
+```
+
+##### Response
+
+```text
+Status: 204 No Content
+```
+
+### Names
+
+#### List names
+
+```api
+GET /api/v1/names
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`page`| `int` | 当前请求的页号 |
+
+> 若缺少该字段，则默认返回第一页的信息。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 50,
+    "cur_page": 1,
+    "data": [
+        {
+            "Id": {
+                "Int64": 1,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm0000001",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Fred Astaire",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1899,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 1987,
+                "Valid": true
+            },
+            "PrimaryProfession": {
+                "String": "soundtrack,actor,miscellaneous",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt0050419,tt0072308,tt0043044,tt0045537",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        },
+        ...  // Some data have been omitted
+        {
+            "Id": {
+                "Int64": 50,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm0000050",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Groucho Marx",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1890,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 1977,
+                "Valid": true
+            },
+            "PrimaryProfession": {
+                "String": "soundtrack,actor,writer",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt0026778,tt0023969,tt0022158,tt0032536",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        }
+    ],
+    "next_page": 2,
+    "prev_page": -1,
+    "server_time": "2018-06-12T23:48:53.499463315+08:00",
+    "start_id": 0,
+    "total_page": 172809
+}
+```
+
+> 若页号为 `-1`，代表该页不可用。
+
+#### Get a name
+
+```api
+GET /api/v1/name/:id
+```
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "data": {
+        "Id": {
+            "Int64": 1,
+            "Valid": true
+        },
+        "NConst": {
+            "String": "nm0000001",
+            "Valid": true
+        },
+        "PrimaryName": {
+            "String": "Fred Astaire",
+            "Valid": true
+        },
+        "BirthYear": {
+            "Int64": 1899,
+            "Valid": true
+        },
+        "DeathYear": {
+            "Int64": 1987,
+            "Valid": true
+        },
+        "PrimaryProfession": {
+            "String": "soundtrack,actor,miscellaneous",
+            "Valid": true
+        },
+        "KnownForTitles": {
+            "String": "tt0050419,tt0072308,tt0043044,tt0045537",
+            "Valid": true
+        },
+        "CreateDate": {
+            "Time": "2018-06-12T23:01:04Z",
+            "Valid": true
+        },
+        "LastUpdated": {
+            "Time": "2018-06-12T23:01:04Z",
+            "Valid": true
+        }
+    },
+    "server_time": "2018-06-12T23:50:59.574007901+08:00"
+}
+```
+
+#### Create a name
+
+```api
+POST /api/v1/names
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`nconst`| `string`| **必填**. 人物唯一标识号|
+|`primary_name`| `string`| **必填**. 姓名|
+|`birth_year`| `int`| 出生年|
+|`death_year`| `int`| 去世年|
+|`primary_profession`| `string`| 人物主要领域/技能|
+|`known_for_titles`| `string`| 知名作品（按影片唯一标识号填写）|
+
+> `form-data` 和 `application/json` 都能被接受，且字段名称类型相同。
+ 
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "insert_id": 8650621,
+    "server_time": "2018-06-12T23:57:15.220742086+08:00"
+}
+```
+
+#### Update a name
+
+```api
+PUT /api/v1/names/:id
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`nconst`| `string`| **必填**. 人物唯一标识号|
+|`primary_name`| `string`| **必填**. 姓名|
+|`birth_year`| `int`| 出生年|
+|`death_year`| `int`| 去世年|
+|`primary_profession`| `string`| 人物主要领域/技能|
+|`known_for_titles`| `string`| 知名作品（按影片唯一标识号填写）|
+
+> `form-data` 和 `application/json` 都能被接受，且字段名称类型相同。
+ 
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "server_time": "2018-06-12T23:57:53.108846482+08:00",
+    "updated_id": "8650621"
+}
+```
+
+#### Delete a name
+
+```api
+DELETE /api/v1/names/:id
 ```
 
 ##### Response

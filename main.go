@@ -20,7 +20,14 @@ func main() {
 			titleApis.DELETE("/:id", app.DeleteTitle)
 		}
 
-		//nameApis := apiV1Root.Group("/names")
+		nameApis := apiV1Root.Group("/names")
+		{
+			nameApis.GET("", app.ReadAllNames)
+			nameApis.GET("/:id", app.ReadSingleName)
+			nameApis.POST("", app.CreateName)
+			nameApis.PUT("/:id", app.UpdateName)
+			nameApis.DELETE("/:id", app.DeleteName)
+		}
 
 		//searchApis := apiV1Root.Group("/search")
 	}

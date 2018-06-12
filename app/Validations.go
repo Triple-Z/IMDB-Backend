@@ -67,3 +67,57 @@ func ValidateTitleStruct(title *TitleBasics) TitleBasicsSQL {
 
 	return titleSQL
 }
+
+func ValidateNameStruct(name *NameBasics) NameBasicsSQL {
+	var nameSQL NameBasicsSQL
+
+	if name.BirthYear == 0 {
+		nameSQL.BirthYear = sql.NullInt64{
+			Int64: 0,
+			Valid: false,
+		}
+	} else {
+		nameSQL.BirthYear = sql.NullInt64{
+			Int64: int64(name.BirthYear),
+			Valid: true,
+		}
+	}
+
+	if name.DeathYear == 0 {
+		nameSQL.DeathYear = sql.NullInt64{
+			Int64: 0,
+			Valid: false,
+		}
+	} else {
+		nameSQL.DeathYear = sql.NullInt64{
+			Int64: int64(name.DeathYear),
+			Valid: true,
+		}
+	}
+
+	if name.PrimaryProfession == "" {
+		nameSQL.PrimaryProfession = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	} else {
+		nameSQL.PrimaryProfession = sql.NullString{
+			String: name.PrimaryProfession,
+			Valid:  true,
+		}
+	}
+
+	if name.KnownForTitles == "" {
+		nameSQL.KnownForTitles = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	} else {
+		nameSQL.KnownForTitles = sql.NullString{
+			String: name.KnownForTitles,
+			Valid:  true,
+		}
+	}
+
+	return nameSQL
+}

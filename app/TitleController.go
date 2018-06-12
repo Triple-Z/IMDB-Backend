@@ -57,10 +57,10 @@ func ReadAllTitles(c *gin.Context) {
 		queryPage = tem
 	}
 
-	row := db.QueryRow("select count(*) from test_title_basics")
+	row := db.QueryRow("select count(*) from title_basics")
 	row.Scan(&totalRows)
 
-	totalPages := int(math.Ceil(float64(totalRows) / rowsPerPage))
+	totalPages := int(math.Ceil(float64(totalRows) / rowsTitlePerPage))
 
 	if queryPage == totalPages {
 		nextPage = -1
@@ -74,9 +74,9 @@ func ReadAllTitles(c *gin.Context) {
 		prevPage = queryPage - 1
 	}
 
-	startId := (queryPage - 1) * rowsPerPage
+	startId := (queryPage - 1) * rowsTitlePerPage
 
-	rows, err := db.Query("select id, tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres, createDate, lastUpdated from test_title_basics where id > ? limit ?", startId, rowsPerPage)
+	rows, err := db.Query("select id, tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres, Create_date, Last_updated from title_basics  where id > ? limit ?", startId, rowsTitlePerPage)
 
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {
@@ -132,7 +132,7 @@ func ReadSingleTitle(c *gin.Context) {
 
 	id := c.Params.ByName("id")
 
-	row := db.QueryRow("select id, tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres, createDate, lastUpdated from test_title_basics where id = ?", id)
+	row := db.QueryRow("select id, tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres, Create_date, Last_updated from title_basics where id = ?", id)
 
 	err := row.Scan(&title.Id, &title.TConst, &title.TitleType, &title.PrimaryTitle, &title.OriginalTitle, &title.IsAdult, &title.StartYear, &title.EndYear, &title.RuntimeMinutes, &title.Genres, &title.CreateDate, &title.LastUpdated)
 
@@ -164,7 +164,7 @@ func CreateTitle(c *gin.Context) {
 
 	if err := c.ShouldBind(&title); err == nil {
 
-		stmt, err := db.Prepare("insert into test_title_basics(tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+		stmt, err := db.Prepare("insert into title_basics(tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errCode := checkSQLError(err); errCode != 0 {
 			switch errCode {
 			case 1:
@@ -224,7 +224,7 @@ func UpdateTitle(c *gin.Context) {
 
 	if err := c.ShouldBind(&title); err == nil {
 
-		stmt, err := db.Prepare("update test_title_basics set tconst = ?, titleType = ?, primaryTitle = ?, originalTitle = ?, isAdult = ?, startYear = ?, endYear = ?, runtimeMinutes = ?, genres = ? where id = ?;")
+		stmt, err := db.Prepare("update title_basics set tconst = ?, Title_type = ?, Primary_title = ?, Original_title = ?, Is_adult = ?, Start_year = ?, End_year = ?, Runtime_minutes = ?, Genres = ? where id = ?;")
 		if errCode := checkSQLError(err); errCode != 0 {
 			switch errCode {
 			case 1:
@@ -257,10 +257,10 @@ func UpdateTitle(c *gin.Context) {
 			return
 		}
 
-		rows_affected, err := status.RowsAffected()
+		rowsAffected, err := status.RowsAffected()
 		checkSQLError(err)
 
-		if rows_affected != 0 {
+		if rowsAffected != 0 {
 			c.JSON(http.StatusOK, gin.H{
 				"server_time": time.Now(),
 				"updated_id":  id,
@@ -283,7 +283,7 @@ func DeleteTitle(c *gin.Context) {
 
 	id := c.Params.ByName("id")
 
-	stmt, err := db.Prepare("delete from test_title_basics where id = ?")
+	stmt, err := db.Prepare("delete from title_basics where id = ?")
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {
 		case 1:
@@ -314,10 +314,10 @@ func DeleteTitle(c *gin.Context) {
 		return
 	}
 
-	rows_affected, err := status.RowsAffected()
+	rowsAffected, err := status.RowsAffected()
 	checkSQLError(err)
 
-	if rows_affected != 0 {
+	if rowsAffected != 0 {
 		c.Status(http.StatusNoContent)
 	} else {
 		c.JSON(http.StatusNotFound, gin.H{

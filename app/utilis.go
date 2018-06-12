@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	rowsPerPage = 20
+	rowsTitlePerPage = 20
+	rowsNamePerPage  = 50
 )
 
 func checkSQLError(err error) uint16 {
