@@ -1,13 +1,13 @@
 package app
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
 func DbInit() *sql.DB {
-	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)?parseTime=true&charset=utf8")
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/imdb?parseTime=true&charset=utf8")
 	checkNormalError(err)
 
 	err = db.Ping()
@@ -18,8 +18,9 @@ func DbInit() *sql.DB {
 
 	log.Println("Connect to database successfully ~")
 
+	//db.Exec("use imdb")
+
 	return db
 }
 
 var db = DbInit()
-
