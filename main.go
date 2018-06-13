@@ -29,7 +29,11 @@ func main() {
 			nameApis.DELETE("/:id", app.DeleteName)
 		}
 
-		//searchApis := apiV1Root.Group("/search")
+		searchApis := apiV1Root.Group("/search")
+		{
+			searchApis.GET("/titles", app.FuzzySearchTitles)
+			searchApis.GET("/names", app.FuzzySearchNames)
+		}
 	}
 
 	router.Run(":2333")
