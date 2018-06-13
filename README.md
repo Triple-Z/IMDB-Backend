@@ -6,40 +6,297 @@
 
 - [IMDB Backend](#imdb-backend)
     - [API References](#api-references)
-        - [Titles](#titles)
-            - [List titles](#list-titles)
+        - [Search](#search)
+            - [Search titles](#search-titles)
                 - [Parameters](#parameters)
                 - [Response](#response)
-            - [Get a title](#get-a-title)
-                - [Response](#response-1)
-            - [Create a title](#create-a-title)
+            - [Search names](#search-names)
                 - [Parameters](#parameters-1)
-                - [Response](#response-2)
-            - [Update a title](#update-a-title)
+                - [Response](#response-1)
+        - [Titles](#titles)
+            - [List titles](#list-titles)
                 - [Parameters](#parameters-2)
+                - [Response](#response-2)
+            - [Get a title](#get-a-title)
                 - [Response](#response-3)
-            - [Delete a title](#delete-a-title)
+            - [Create a title](#create-a-title)
+                - [Parameters](#parameters-3)
                 - [Response](#response-4)
+            - [Update a title](#update-a-title)
+                - [Parameters](#parameters-4)
+                - [Response](#response-5)
+            - [Delete a title](#delete-a-title)
+                - [Response](#response-6)
         - [Names](#names)
             - [List names](#list-names)
-                - [Parameters](#parameters-3)
-                - [Response](#response-5)
-            - [Get a name](#get-a-name)
-                - [Response](#response-6)
-            - [Create a name](#create-a-name)
-                - [Parameters](#parameters-4)
-                - [Response](#response-7)
-            - [Update a name](#update-a-name)
                 - [Parameters](#parameters-5)
+                - [Response](#response-7)
+            - [Get a name](#get-a-name)
                 - [Response](#response-8)
-            - [Delete a name](#delete-a-name)
+            - [Create a name](#create-a-name)
+                - [Parameters](#parameters-6)
                 - [Response](#response-9)
+            - [Update a name](#update-a-name)
+                - [Parameters](#parameters-7)
+                - [Response](#response-10)
+            - [Delete a name](#delete-a-name)
+                - [Response](#response-11)
 
 <!-- /TOC -->
 
 ## API References
 
 API root: http://localhost:2333
+
+### Search
+
+#### Search titles
+
+```api
+GET /api/v1/search/titles
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`q` | `string`| 待搜索字段 |
+|`page`| `int` | 当前请求的页号 |
+
+> 若缺少 `page` 字段，则默认返回第一页的信息。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 20,
+    "cur_page": 1,
+    "data": [
+        {
+            "Id": {
+                "Int64": 69495,
+                "Valid": true
+            },
+            "TConst": {
+                "String": "tt0070909",
+                "Valid": true
+            },
+            "TitleType": {
+                "String": "movie",
+                "Valid": true
+            },
+            "PrimaryTitle": {
+                "String": "Westworld",
+                "Valid": true
+            },
+            "OriginalTitle": {
+                "String": "Westworld",
+                "Valid": true
+            },
+            "IsAdult": {
+                "Bool": false,
+                "Valid": true
+            },
+            "StartYear": {
+                "Int64": 1973,
+                "Valid": true
+            },
+            "EndYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "RuntimeMinutes": {
+                "Int64": 88,
+                "Valid": true
+            },
+            "Genres": {
+                "String": "Action,Sci-Fi,Thriller",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            }
+        },
+        ...  // These lines have been omitted
+        {
+            "Id": {
+                "Int64": 4115389,
+                "Valid": true
+            },
+            "TConst": {
+                "String": "tt6528044",
+                "Valid": true
+            },
+            "TitleType": {
+                "String": "tvEpisode",
+                "Valid": true
+            },
+            "PrimaryTitle": {
+                "String": "WestWorld",
+                "Valid": true
+            },
+            "OriginalTitle": {
+                "String": "WestWorld",
+                "Valid": true
+            },
+            "IsAdult": {
+                "Bool": false,
+                "Valid": true
+            },
+            "StartYear": {
+                "Int64": 2016,
+                "Valid": true
+            },
+            "EndYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "RuntimeMinutes": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "Genres": {
+                "String": "Comedy",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            }
+        }
+    ],
+    "next_page": 2,
+    "prev_page": -1,
+    "server_time": "2018-06-13T23:34:27.568742891+08:00",
+    "start_id": 0,
+    "total_page": 3
+}
+```
+
+#### Search names
+
+```api
+GET /api/v1/search/names
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`q` | `string`| 待搜索字段 |
+|`page`| `int` | 当前请求的页号 |
+
+> 若缺少 `page` 字段，则默认返回第一页的信息。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 50,
+    "cur_page": 1,
+    "data": [
+        {
+            "Id": {
+                "Int64": 600811,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm0634240",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Christopher Nolan",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1970,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "PrimaryProfession": {
+                "String": "writer,producer,director",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt0482571,tt1375666,tt0816692,tt0154506",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        },
+        ...  // These lines have been omitted
+        {
+            "Id": {
+                "Int64": 600795,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm0634224",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Bill Nolan",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "DeathYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "PrimaryProfession": {
+                "String": "actor",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt0116322",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        }
+    ],
+    "next_page": 2,
+    "prev_page": -1,
+    "server_time": "2018-06-13T23:38:58.420526838+08:00",
+    "start_id": 0,
+    "total_page": 14
+}
+```
 
 ### Titles
 
