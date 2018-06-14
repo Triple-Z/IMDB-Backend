@@ -18,6 +18,8 @@ func main() {
 			titleApis.POST("", app.CreateTitle)
 			titleApis.PUT("/:id", app.UpdateTitle)
 			titleApis.DELETE("/:id", app.DeleteTitle)
+
+			titleApis.GET("/:id/detail", app.ReadTitleDetails)
 		}
 
 		nameApis := apiV1Root.Group("/names")
@@ -32,7 +34,9 @@ func main() {
 		searchApis := apiV1Root.Group("/search")
 		{
 			searchApis.GET("/titles", app.FuzzySearchTitles)
+			searchApis.POST("/titles", app.AccurateSearchTitles)
 			searchApis.GET("/names", app.FuzzySearchNames)
+			searchApis.POST("/names", app.AccurateSearchNames)
 		}
 	}
 

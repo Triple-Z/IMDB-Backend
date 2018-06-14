@@ -1,13 +1,13 @@
 package app
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
-	"strconv"
+	"log"
 	"math"
 	"net/http"
+	"strconv"
 	"time"
-	"database/sql"
-	"log"
 )
 
 func FuzzySearchTitles(c *gin.Context) {
@@ -20,7 +20,6 @@ func FuzzySearchTitles(c *gin.Context) {
 		titles    []TitleBasicsSQL
 		nullScore sql.NullFloat64
 	)
-
 
 	queryString := c.Query("q")
 
@@ -216,7 +215,7 @@ func FuzzySearchNames(c *gin.Context) {
 
 	startId := (queryPage - 1) * rowsNamePerPage
 
-	rows, err := db.Query("select *, match(Primary_name) against (? in natural language mode) as rel_name, match(Primary_profession) against(? in natural language mode) as rel_profession from name_basics where match (Primary_name, Primary_profession) against (? in natural language mode) order by (rel_name*2)+(rel_profession) desc limit ?, ?",queryString, queryString, queryString, startId, rowsNamePerPage)
+	rows, err := db.Query("select *, match(Primary_name) against (? in natural language mode) as rel_name, match(Primary_profession) against(? in natural language mode) as rel_profession from name_basics where match (Primary_name, Primary_profession) against (? in natural language mode) order by (rel_name*2)+(rel_profession) desc limit ?, ?", queryString, queryString, queryString, startId, rowsNamePerPage)
 
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {
@@ -325,4 +324,12 @@ func FuzzySearchNames(c *gin.Context) {
 		"server_time": time.Now(),
 		"data":        names,
 	})
+}
+
+func AccurateSearchTitles(c *gin.Context) {
+
+}
+
+func AccurateSearchNames(c *gin.Context) {
+
 }
