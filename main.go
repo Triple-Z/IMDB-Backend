@@ -2,12 +2,17 @@ package main
 
 import (
 	"./app"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
 	router := gin.Default()
+
+	if app.AllowCORS {
+		router.Use(cors.Default())
+	}
 
 	apiV1Root := router.Group("/api/v1")
 	{
@@ -34,9 +39,17 @@ func main() {
 		searchApis := apiV1Root.Group("/search")
 		{
 			searchApis.GET("/titles", app.FuzzySearchTitles)
-			searchApis.POST("/titles", app.AccurateSearchTitles)
+			searchApis.POST("/titles", app.AccurateSearchTitles) // TODO: 电影高级搜索
 			searchApis.GET("/names", app.FuzzySearchNames)
-			searchApis.POST("/names", app.AccurateSearchNames)
+			searchApis.POST("/names", app.AccurateSearchNames) // TODO: 人物高级搜索
+		}
+
+		principalApis := apiV1Root.Group("/principals")
+		{
+			principalApis.GET("/:id", app.ReadSinglePrincipal)
+			principalApis.POST("", app.CreatePrincipal)
+			principalApis.PUT("/:id", app.UpdatePrincipal)
+			principalApis.DELETE("/:id", app.DeletePrincipal)
 		}
 	}
 

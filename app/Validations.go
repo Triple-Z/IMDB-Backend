@@ -121,3 +121,45 @@ func ValidateNameStruct(name *NameBasics) NameBasicsSQL {
 
 	return nameSQL
 }
+
+func ValidateTitlePrincipalStruct(titlePrincipal *TitlePrincipal) TitlePrincipalSQL {
+	var titlePrincipalSQL TitlePrincipalSQL
+
+	if titlePrincipal.Category == "" {
+		titlePrincipalSQL.Category = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	} else {
+		titlePrincipalSQL.Category = sql.NullString{
+			String: titlePrincipal.Category,
+			Valid:  true,
+		}
+	}
+
+	if titlePrincipal.Job == "" {
+		titlePrincipalSQL.Job = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	} else {
+		titlePrincipalSQL.Job = sql.NullString{
+			String: titlePrincipal.Job,
+			Valid:  true,
+		}
+	}
+
+	if titlePrincipal.Characters == "" {
+		titlePrincipalSQL.Characters = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	} else {
+		titlePrincipalSQL.Characters = sql.NullString{
+			String: titlePrincipal.Characters,
+			Valid:  true,
+		}
+	}
+
+	return titlePrincipalSQL
+}

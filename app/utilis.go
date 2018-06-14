@@ -5,11 +5,6 @@ import (
 	"log"
 )
 
-const (
-	rowsTitlePerPage = 20
-	rowsNamePerPage  = 50
-)
-
 func checkSQLError(err error) uint16 {
 	// check SQL driver error
 	if driverErr, ok := err.(*mysql.MySQLError); ok {
