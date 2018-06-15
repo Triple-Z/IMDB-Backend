@@ -328,8 +328,211 @@ func FuzzySearchNames(c *gin.Context) {
 
 func AccurateSearchTitles(c *gin.Context) {
 
+	//c.JSON(http.StatusOK, gin.H{
+	//	"message": "This function haven't been supported yet .",
+	//})
+	//return
+
+	var (
+		queryPage int
+		prevPage  int
+		nextPage  int
+		totalRows int
+		title     TitleBasicsSQL
+		titles    []TitleBasicsSQL
+	)
+
+	tconst := c.Query("tconst")
+	isAdult := c.Query("isAdult")
+	startYearStart := c.Query("startYearStart")
+	startYearEnd := c.Query("startYearEnd")
+	endYearStart := c.Query("endYearStart")
+	endYearEnd := c.Query("endYearEnd")
+	runtimeMinStart := c.Query("runtimeMinStart")
+	runtimeMinEnd := c.Query("runtimeMinEnd")
+
+	queryString := c.Query("q")
+
+	queryPageString := c.Query("page")
+
+	if queryPageString == "" {
+		queryPage = 1
+	} else {
+		tem, err := strconv.Atoi(queryPageString)
+		checkNormalError(err)
+		queryPage = tem
+	}
+
+	SQLCountString, SQLQueryString := CreateTitleASSQLString(queryString, tconst, isAdult, startYearStart, startYearEnd, endYearStart, endYearEnd, runtimeMinStart, runtimeMinEnd)
+
+	row := db.QueryRow(SQLCountString)
+	row.Scan(&totalRows)
+
+	totalPages := int(math.Ceil(float64(totalRows) / rowsTitlePerPage))
+
+	if queryPage == totalPages {
+		nextPage = -1
+	} else {
+		nextPage = queryPage + 1
+	}
+
+	if queryPage == 1 {
+		prevPage = -1
+	} else {
+		prevPage = queryPage - 1
+	}
+
+	startRow := (queryPage - 1) * rowsTitlePerPage
+
+	rows, err := db.Query(SQLQueryString+" limit ?, ?", startRow, rowsTitlePerPage)
+	if errCode := checkSQLError(err); errCode != 0 {
+		switch errCode {
+		case 1:
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Unknown error",
+			})
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
+		}
+		return
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&title.Id, &title.TConst, &title.TitleType, &title.PrimaryTitle, &title.OriginalTitle, &title.IsAdult, &title.StartYear, &title.EndYear, &title.RuntimeMinutes, &title.Genres, &title.CreateDate, &title.LastUpdated)
+		if errCode := checkSQLError(err); errCode != 0 {
+			switch errCode {
+			case 1:
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"message": "Unknown error",
+				})
+			default:
+				c.JSON(http.StatusBadRequest, gin.H{
+					"message": err.Error(),
+				})
+			}
+			return
+		}
+		titles = append(titles, title)
+		//log.Print(title)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"start_id":    startRow,
+		"count":       len(titles),
+		"cur_page":    queryPage,
+		"next_page":   nextPage,
+		"prev_page":   prevPage,
+		"total_page":  totalPages,
+		"server_time": time.Now(),
+		"data":        titles,
+	})
+
 }
 
 func AccurateSearchNames(c *gin.Context) {
+
+	//c.JSON(http.StatusOK, gin.H{
+	//	"message": "This function haven't been supported yet .",
+	//})
+	//return
+
+	var (
+		queryPage int
+		prevPage  int
+		nextPage  int
+		totalRows int
+		name      NameBasicsSQL
+		names     []NameBasicsSQL
+	)
+
+	nconst := c.Query("nconst")
+	birthYearStart := c.Query("birthYearStart")
+	birthYearEnd := c.Query("birthYearEnd")
+	deathYearStart := c.Query("deathYearStart")
+	deathYearEnd := c.Query("deathYearEnd")
+
+	queryString := c.Query("q")
+
+	queryPageString := c.Query("page")
+
+	if queryPageString == "" {
+		queryPage = 1
+	} else {
+		tem, err := strconv.Atoi(queryPageString)
+		checkNormalError(err)
+		queryPage = tem
+	}
+
+	SQLCountString, SQLQueryString := CreateNameASSQLString(queryString, nconst, birthYearStart, birthYearEnd, deathYearStart, deathYearEnd)
+
+	row := db.QueryRow(SQLCountString)
+	row.Scan(&totalRows)
+
+	totalPages := int(math.Ceil(float64(totalRows) / rowsNamePerPage))
+
+	if queryPage == totalPages {
+		nextPage = -1
+	} else {
+		nextPage = queryPage + 1
+	}
+
+	if queryPage == 1 {
+		prevPage = -1
+	} else {
+		prevPage = queryPage - 1
+	}
+
+	startRow := (queryPage - 1) * rowsNamePerPage
+
+	rows, err := db.Query(SQLQueryString+" limit ?, ?", startRow, rowsNamePerPage)
+	if errCode := checkSQLError(err); errCode != 0 {
+		switch errCode {
+		case 1:
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Unknown error",
+			})
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": err.Error(),
+			})
+		}
+		return
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&name.Id, &name.NConst, &name.PrimaryName, &name.BirthYear, &name.DeathYear, &name.PrimaryProfession, &name.KnownForTitles, &name.CreateDate, &name.LastUpdated)
+		if errCode := checkSQLError(err); errCode != 0 {
+			switch errCode {
+			case 1:
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"message": "Unknown error",
+				})
+			default:
+				c.JSON(http.StatusBadRequest, gin.H{
+					"message": err.Error(),
+				})
+			}
+			return
+		}
+		names = append(names, name)
+		//log.Print(name)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"start_id":    startRow,
+		"count":       len(names),
+		"cur_page":    queryPage,
+		"next_page":   nextPage,
+		"prev_page":   prevPage,
+		"total_page":  totalPages,
+		"server_time": time.Now(),
+		"data":        names,
+	})
 
 }

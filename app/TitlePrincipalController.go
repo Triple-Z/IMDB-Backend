@@ -10,7 +10,7 @@ import (
 )
 
 type TitleDetailSQL struct {
-	Ordering sql.NullInt64
+	Ordering    sql.NullInt64
 	PrimaryName sql.NullString
 	Category    sql.NullString
 	Job         sql.NullString
@@ -40,7 +40,7 @@ type TitlePrincipal struct {
 
 func ReadTitleDetails(c *gin.Context) {
 	var (
-		titleDetailSQL TitleDetailSQL
+		titleDetailSQL  TitleDetailSQL
 		titleDetailSQLs []TitleDetailSQL
 	)
 

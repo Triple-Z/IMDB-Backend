@@ -39,9 +39,9 @@ func main() {
 		searchApis := apiV1Root.Group("/search")
 		{
 			searchApis.GET("/titles", app.FuzzySearchTitles)
-			searchApis.POST("/titles", app.AccurateSearchTitles) // TODO: 电影高级搜索
+			searchApis.POST("/titles", app.AccurateSearchTitles)
 			searchApis.GET("/names", app.FuzzySearchNames)
-			searchApis.POST("/names", app.AccurateSearchNames) // TODO: 人物高级搜索
+			searchApis.POST("/names", app.AccurateSearchNames)
 		}
 
 		principalApis := apiV1Root.Group("/principals")
