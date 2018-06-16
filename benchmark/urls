@@ -1,0 +1,11 @@
+http://localhost:2333/api/v1/titles
+http://localhost:2333/api/v1/names
+http://localhost:2333/api/v1/titles/1
+http://localhost:2333/api/v1/titles/1/details
+http://localhost:2333/api/v1/names/1
+http://localhost:2333/api/v1/search/titles?q=westworld
+http://localhost:2333/api/v1/search/names?q=nolan
+http://localhost:2333/api/v1/names/nm0939697
+http://localhost:2333/api/v1/titles/458041/details
+http://localhost:2333/api/v1/advanced_search/titles?q=westworld&isAdult=false&startYearStart=2010&runtimeMinStart=40&runtimeMinEnd=120
+http://localhost:2333/api/v1/advanced_search/names?q=evan wood&birthYearStart=1985&birthYearEnd=1995&page=2
