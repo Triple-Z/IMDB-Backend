@@ -711,7 +711,12 @@ Status: 200 OK
 
 ```api
 GET /api/v1/titles/:id
+GET /api/v1/titles/:tconst
 ```
+
+> 同时支持 `id` 和 `tconst` 值获取，得到的结果相同。
+>   
+> 只有 `Get a title` 和 `Get a name` 支持双值获取，为了方便查询结果。其他 API 还是需要唯一 `id` 号才可操作。
 
 ##### Response
 
@@ -1057,8 +1062,14 @@ Status: 200 OK
 #### Get a name
 
 ```api
-GET /api/v1/name/:id
+GET /api/v1/names/:id
+GET /api/v1/names/:nconst
 ```
+
+> 同时支持 `id` 和 `nconst` 值获取，得到的结果相同。
+>  
+> 只有 `Get a name` 和 `Get a title` 支持双值获取，为了方便查询结果。其他 API 还是需要唯一 `id` 号才可操作。
+
 
 ##### Response
 

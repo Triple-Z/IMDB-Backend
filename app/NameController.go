@@ -7,6 +7,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 	"math"
 	"net/http"
+	"regexp"
 	"strconv"
 	"time"
 )
@@ -123,14 +124,29 @@ func ReadAllNames(c *gin.Context) {
 
 func ReadSingleName(c *gin.Context) {
 	var (
-		name NameBasicsSQL
+		name   NameBasicsSQL
+		row    *sql.Row
+		id     string
+		nconst string
 	)
 
-	id := c.Params.ByName("id")
+	idString := c.Params.ByName("id")
 
-	row := db.QueryRow("select id, nconst, Primary_name, Birth_year, Death_year, Primary_profession, Known_for_titles, Create_date, Last_updated from name_basics where id = ?", id)
+	reg, err := regexp.Compile("^[a-zA-Z]+")
+	checkNormalError(err)
 
-	err := row.Scan(&name.Id, &name.NConst, &name.PrimaryName, &name.BirthYear, &name.DeathYear, &name.PrimaryProfession, &name.KnownForTitles, &name.CreateDate, &name.LastUpdated)
+	if reg.MatchString(idString) {
+		// nconst
+		nconst = idString
+		row = db.QueryRow("select id, nconst, Primary_name, Birth_year, Death_year, Primary_profession, Known_for_titles, Create_date, Last_updated from name_basics where nconst = ?", nconst)
+	} else {
+		// id
+		id = idString
+		row = db.QueryRow("select id, nconst, Primary_name, Birth_year, Death_year, Primary_profession, Known_for_titles, Create_date, Last_updated from name_basics where id = ?", id)
+
+	}
+
+	err = row.Scan(&name.Id, &name.NConst, &name.PrimaryName, &name.BirthYear, &name.DeathYear, &name.PrimaryProfession, &name.KnownForTitles, &name.CreateDate, &name.LastUpdated)
 
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {

@@ -7,6 +7,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 	"math"
 	"net/http"
+	"regexp"
 	"strconv"
 	"time"
 )
@@ -127,14 +128,28 @@ func ReadAllTitles(c *gin.Context) {
 
 func ReadSingleTitle(c *gin.Context) {
 	var (
-		title TitleBasicsSQL
+		title  TitleBasicsSQL
+		id     string
+		tconst string
+		row    *sql.Row
 	)
 
-	id := c.Params.ByName("id")
+	idString := c.Params.ByName("id")
 
-	row := db.QueryRow("select id, tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres, Create_date, Last_updated from title_basics where id = ?", id)
+	reg, err := regexp.Compile("^[a-zA-Z]+")
+	checkNormalError(err)
 
-	err := row.Scan(&title.Id, &title.TConst, &title.TitleType, &title.PrimaryTitle, &title.OriginalTitle, &title.IsAdult, &title.StartYear, &title.EndYear, &title.RuntimeMinutes, &title.Genres, &title.CreateDate, &title.LastUpdated)
+	if reg.MatchString(idString) {
+		// TConst
+		tconst = idString
+		row = db.QueryRow("select id, tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres, Create_date, Last_updated from title_basics where tconst = ?", tconst)
+	} else {
+		// id
+		id = idString
+		row = db.QueryRow("select id, tconst, Title_type, Primary_title, Original_title, Is_adult, Start_year, End_year, Runtime_minutes, Genres, Create_date, Last_updated from title_basics where id = ?", id)
+	}
+
+	err = row.Scan(&title.Id, &title.TConst, &title.TitleType, &title.PrimaryTitle, &title.OriginalTitle, &title.IsAdult, &title.StartYear, &title.EndYear, &title.RuntimeMinutes, &title.Genres, &title.CreateDate, &title.LastUpdated)
 
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {
