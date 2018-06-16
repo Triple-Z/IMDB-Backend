@@ -7,40 +7,59 @@
 - [IMDB Backend](#imdb-backend)
     - [API References](#api-references)
         - [Search](#search)
-            - [Search titles](#search-titles)
+            - [Fuzzy search titles](#fuzzy-search-titles)
                 - [Parameters](#parameters)
                 - [Response](#response)
-            - [Search names](#search-names)
+            - [Fuzzy search names](#fuzzy-search-names)
                 - [Parameters](#parameters-1)
                 - [Response](#response-1)
-        - [Titles](#titles)
-            - [List titles](#list-titles)
+            - [Advanced search titles](#advanced-search-titles)
                 - [Parameters](#parameters-2)
                 - [Response](#response-2)
-            - [Get a title](#get-a-title)
-                - [Response](#response-3)
-            - [Create a title](#create-a-title)
+            - [Advanced search names](#advanced-search-names)
                 - [Parameters](#parameters-3)
-                - [Response](#response-4)
-            - [Update a title](#update-a-title)
+                - [Response](#response-3)
+        - [Titles](#titles)
+            - [List titles](#list-titles)
                 - [Parameters](#parameters-4)
+                - [Response](#response-4)
+            - [Get a title](#get-a-title)
                 - [Response](#response-5)
-            - [Delete a title](#delete-a-title)
+            - [Create a title](#create-a-title)
+                - [Parameters](#parameters-5)
                 - [Response](#response-6)
+            - [Update a title](#update-a-title)
+                - [Parameters](#parameters-6)
+                - [Response](#response-7)
+            - [Delete a title](#delete-a-title)
+                - [Response](#response-8)
+            - [Get a title details](#get-a-title-details)
+                - [Response](#response-9)
         - [Names](#names)
             - [List names](#list-names)
-                - [Parameters](#parameters-5)
-                - [Response](#response-7)
-            - [Get a name](#get-a-name)
-                - [Response](#response-8)
-            - [Create a name](#create-a-name)
-                - [Parameters](#parameters-6)
-                - [Response](#response-9)
-            - [Update a name](#update-a-name)
                 - [Parameters](#parameters-7)
                 - [Response](#response-10)
-            - [Delete a name](#delete-a-name)
+            - [Get a name](#get-a-name)
                 - [Response](#response-11)
+            - [Create a name](#create-a-name)
+                - [Parameters](#parameters-8)
+                - [Response](#response-12)
+            - [Update a name](#update-a-name)
+                - [Parameters](#parameters-9)
+                - [Response](#response-13)
+            - [Delete a name](#delete-a-name)
+                - [Response](#response-14)
+        - [Principals](#principals)
+            - [Get a principal](#get-a-principal)
+                - [Response](#response-15)
+            - [Create a principal](#create-a-principal)
+                - [Parameters](#parameters-10)
+                - [Response](#response-16)
+            - [Update a principal](#update-a-principal)
+                - [Parameters](#parameters-11)
+                - [Response](#response-17)
+            - [Delete a principal](#delete-a-principal)
+                - [Response](#response-18)
 
 <!-- /TOC -->
 
@@ -50,7 +69,7 @@ API root: http://localhost:2333
 
 ### Search
 
-#### Search titles
+#### Fuzzy search titles
 
 ```api
 GET /api/v1/search/titles
@@ -186,7 +205,7 @@ Status: 200 OK
 }
 ```
 
-#### Search names
+#### Fuzzy search names
 
 ```api
 GET /api/v1/search/names
@@ -295,6 +314,257 @@ Status: 200 OK
     "server_time": "2018-06-13T23:38:58.420526838+08:00",
     "start_id": 0,
     "total_page": 14
+}
+```
+
+#### Advanced search titles
+
+```api
+GET /api/v1/advanced_search/titles
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`q` | `string`| 待搜索字段（支持布尔表达式） |
+|`tconst` | `string` | 影片唯一标识号 |
+|`isAdult` | `string` | 成人分类标识|
+|`startYearStart` | `int` | 影片/电视剧开始年份的起始值|
+|`startYearEnd` | `int` | 影片/电视剧开始年份的结束值|
+|`endYearStart` | `int` | 电视剧结束年份的起始值|
+|`endYearEnd` | `int` | 电视剧结束年份的结束值|
+|`runtimeMinStart` | `int` | 影片持续时间的起始值|
+|`runtimeMinEnd` | `int` | 影片持续时间的结束值|
+|`page`| `int` | 当前请求的页号 |
+
+> 以上值都为非必需，若值为空可以不传。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 1,
+    "cur_page": 1,
+    "data": [
+        {
+            "Id": {
+                "Int64": 458041,
+                "Valid": true
+            },
+            "TConst": {
+                "String": "tt0475784",
+                "Valid": true
+            },
+            "TitleType": {
+                "String": "tvSeries",
+                "Valid": true
+            },
+            "PrimaryTitle": {
+                "String": "Westworld",
+                "Valid": true
+            },
+            "OriginalTitle": {
+                "String": "Westworld",
+                "Valid": true
+            },
+            "IsAdult": {
+                "Bool": false,
+                "Valid": true
+            },
+            "StartYear": {
+                "Int64": 2016,
+                "Valid": true
+            },
+            "EndYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "RuntimeMinutes": {
+                "Int64": 62,
+                "Valid": true
+            },
+            "Genres": {
+                "String": "Drama,Mystery,Sci-Fi",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T22:14:51Z",
+                "Valid": true
+            }
+        }
+    ],
+    "next_page": -1,
+    "prev_page": -1,
+    "server_time": "2018-06-16T15:46:04.38158079+08:00",
+    "start_id": 0,
+    "total_page": 1
+}
+```
+
+#### Advanced search names
+
+```api
+GET /api/v1/advanced_search/names
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`q` | `string`| 待搜索字段（支持布尔表达式） |
+|`tconst` | `string` | 影片唯一标识号 |
+|`isAdult` | `string` | 成人分类标识|
+|`startYearStart` | `int` | 影片/电视剧开始年份的起始值|
+|`startYearEnd` | `int` | 影片/电视剧开始年份的结束值|
+|`endYearStart` | `int` | 电视剧结束年份的起始值|
+|`endYearEnd` | `int` | 电视剧结束年份的结束值|
+|`runtimeMinStart` | `int` | 影片持续时间的起始值|
+|`runtimeMinEnd` | `int` | 影片持续时间的结束值|
+|`page`| `int` | 当前请求的页号 |
+
+> 以上值都为非必需，若值为空可以不传。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 50,
+    "cur_page": 1,
+    "data": [
+        {
+            "Id": {
+                "Int64": 887972,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm0939697",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Evan Rachel Wood",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1987,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "PrimaryProfession": {
+                "String": "actress,soundtrack,music_department",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt0328538,tt1178663,tt1124035,tt0475784",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        },
+        ...  // These lines have been omitted.
+        {
+            "Id": {
+                "Int64": 4764388,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm5279037",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Evan Kopczyk",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1992,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "PrimaryProfession": {
+                "String": "miscellaneous,editorial_department,actor",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt1793223,tt1094666,tt1831806,tt2882174",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        },
+        {
+            "Id": {
+                "Int64": 4780054,
+                "Valid": true
+            },
+            "NConst": {
+                "String": "nm5295960",
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Evan Chester",
+                "Valid": true
+            },
+            "BirthYear": {
+                "Int64": 1988,
+                "Valid": true
+            },
+            "DeathYear": {
+                "Int64": 0,
+                "Valid": false
+            },
+            "PrimaryProfession": {
+                "String": "miscellaneous,actor",
+                "Valid": true
+            },
+            "KnownForTitles": {
+                "String": "tt5867314,tt2908446,tt2975590,tt2109248",
+                "Valid": true
+            },
+            "CreateDate": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            },
+            "LastUpdated": {
+                "Time": "2018-06-12T23:01:04Z",
+                "Valid": true
+            }
+        }
+    ],
+    "next_page": 2,
+    "prev_page": -1,
+    "server_time": "2018-06-16T15:55:51.299654741+08:00",
+    "start_id": 0,
+    "total_page": 3
 }
 ```
 
@@ -587,6 +857,88 @@ DELETE /api/v1/titles/:id
 Status: 204 No Content
 ```
 
+#### Get a title details
+
+```api
+GET /api/v1/titles/:id/details
+```
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "count": 10,
+    "data": [
+        {
+            "Id": {
+                "Int64": 3295656,
+                "Valid": true
+            },
+            "Ordering": {
+                "Int64": 1,
+                "Valid": true
+            },
+            "NameId": {
+                "Int64": 1379242,
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Evan Rachel Wood",
+                "Valid": true
+            },
+            "Category": {
+                "String": "actress",
+                "Valid": true
+            },
+            "Job": {
+                "String": "",
+                "Valid": false
+            },
+            "Characters": {
+                "String": "Dolores Abernathy",
+                "Valid": true
+            }
+        },
+        ...  // These lines have been omitted
+        {
+            "Id": {
+                "Int64": 3295655,
+                "Valid": true
+            },
+            "NameId": {
+                "Int64": 438228,
+                "Valid": true
+            },
+            "Ordering": {
+                "Int64": 10,
+                "Valid": true
+            },
+            "PrimaryName": {
+                "String": "Sidse Babett Knudsen",
+                "Valid": true
+            },
+            "Category": {
+                "String": "actress",
+                "Valid": true
+            },
+            "Job": {
+                "String": "",
+                "Valid": false
+            },
+            "Characters": {
+                "String": "Theresa Cullen",
+                "Valid": true
+            }
+        }
+    ],
+    "server_time": "2018-06-16T14:58:01.641212628+08:00"
+}
+```
+
 ### Names
 
 #### List names
@@ -826,6 +1178,140 @@ Status: 200 OK
 
 ```api
 DELETE /api/v1/names/:id
+```
+
+##### Response
+
+```text
+Status: 204 No Content
+```
+
+### Principals
+
+#### Get a principal
+
+```api
+GET /api/v1/principals/:id
+```
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "data": {
+        "Id": {
+            "Int64": 3295656,
+            "Valid": true
+        },
+        "TConst": {
+            "String": "tt0475784",
+            "Valid": true
+        },
+        "Ordering": {
+            "Int64": 1,
+            "Valid": true
+        },
+        "NConst": {
+            "String": "nm0939697",
+            "Valid": true
+        },
+        "Category": {
+            "String": "actress",
+            "Valid": true
+        },
+        "Job": {
+            "String": "",
+            "Valid": false
+        },
+        "Characters": {
+            "String": "Dolores Abernathy",
+            "Valid": true
+        },
+        "CreateDate": {
+            "Time": "2018-06-14T21:24:15Z",
+            "Valid": true
+        },
+        "LastUpdated": {
+            "Time": "2018-06-14T21:24:15Z",
+            "Valid": true
+        }
+    },
+    "server_time": "2018-06-16T15:06:06.861335428+08:00"
+}
+```
+
+#### Create a principal
+
+```api
+POST /api/v1/principals
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`tconst`| `string`| **必填**. 影片唯一标识号|
+|`ordering`| `int`| **必填**. 人物在影片中的排序|
+|`nconst`| `string`| **必填**. 人物唯一标识号|
+|`category`| `string`| 人物主要职务|
+|`job`| `string`| 人物主要职责|
+|`characters`| `string`| 人物扮演的角色名|
+
+> `form-data` 和 `application/json` 都能被接受，且字段名称类型相同。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "insert_id": 28507726,
+    "server_time": "2018-06-16T15:17:36.334594154+08:00"
+}
+```
+
+#### Update a principal
+
+```api
+PUT /api/v1/principals/:id
+```
+
+##### Parameters
+
+| Name | Type | Description |
+|:----:|:----:| :-----: |
+|`tconst`| `string`| **必填**. 影片唯一标识号|
+|`ordering`| `int`| **必填**. 人物在影片中的排序|
+|`nconst`| `string`| **必填**. 人物唯一标识号|
+|`category`| `string`| 人物主要职务|
+|`job`| `string`| 人物主要职责|
+|`characters`| `string`| 人物扮演的角色名|
+
+> `form-data` 和 `application/json` 都能被接受，且字段名称类型相同。
+
+##### Response
+
+```text
+Status: 200 OK
+```
+
+```json
+{
+    "server_time": "2018-06-16T15:20:03.23159969+08:00",
+    "updated_id": "28507726"
+}
+```
+
+#### Delete a principal
+
+```api
+DELETE /api/v1/principals/:id
 ```
 
 ##### Response

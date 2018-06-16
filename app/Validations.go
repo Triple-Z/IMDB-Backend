@@ -156,7 +156,7 @@ func ValidateTitlePrincipalStruct(titlePrincipal *TitlePrincipal) TitlePrincipal
 		}
 	} else {
 		titlePrincipalSQL.Characters = sql.NullString{
-			String: titlePrincipal.Characters,
+			String: "[\"" + titlePrincipal.Characters + "\"]",
 			Valid:  true,
 		}
 	}

@@ -10,6 +10,12 @@ func main() {
 
 	router := gin.Default()
 
+	if app.ReleaseMode {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode)
+	}
+
 	if app.AllowCORS {
 		router.Use(cors.Default())
 	}
@@ -24,7 +30,7 @@ func main() {
 			titleApis.PUT("/:id", app.UpdateTitle)
 			titleApis.DELETE("/:id", app.DeleteTitle)
 
-			titleApis.GET("/:id/detail", app.ReadTitleDetails)
+			titleApis.GET("/:id/details", app.ReadTitleDetails)
 		}
 
 		nameApis := apiV1Root.Group("/names")
@@ -36,12 +42,16 @@ func main() {
 			nameApis.DELETE("/:id", app.DeleteName)
 		}
 
-		searchApis := apiV1Root.Group("/search")
+		fuzzySearchApis := apiV1Root.Group("/search")
 		{
-			searchApis.GET("/titles", app.FuzzySearchTitles)
-			searchApis.POST("/titles", app.AccurateSearchTitles)
-			searchApis.GET("/names", app.FuzzySearchNames)
-			searchApis.POST("/names", app.AccurateSearchNames)
+			fuzzySearchApis.GET("/titles", app.FuzzySearchTitles)
+			fuzzySearchApis.GET("/names", app.FuzzySearchNames)
+		}
+
+		advancedSearchApis := apiV1Root.Group("/advanced_search")
+		{
+			advancedSearchApis.GET("/titles", app.AccurateSearchTitles)
+			advancedSearchApis.GET("/names", app.AccurateSearchNames)
 		}
 
 		principalApis := apiV1Root.Group("/principals")

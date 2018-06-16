@@ -40,19 +40,19 @@ func CreateTitleASSQLString(queryString string, tconst string, isAdult string, s
 	basicSQLCountString := "select count(*) from title_basics"
 
 	if tconst != "" {
-		SQLQueryString = basicSQLQueryString + " where tconst = " + tconst
-		SQLCountString = basicSQLCountString + " where tconst = " + tconst
+		SQLQueryString = basicSQLQueryString + " where tconst = '" + tconst + "'"
+		SQLCountString = basicSQLCountString + " where tconst = '" + tconst + "'"
 		return SQLCountString, SQLQueryString
 	}
 
 	if queryString != "" {
 		if isFirstCondition {
-			SQLQueryString = basicSQLQueryString + " where match(Title_type, Primary_title, Original_title, Genres) against (" + queryString + " in boolean mode)"
-			SQLCountString = basicSQLCountString + " where match(Title_type, Primary_title, Original_title, Genres) against (" + queryString + " in boolean mode)"
+			SQLQueryString = basicSQLQueryString + " where match(Title_type, Primary_title, Original_title, Genres) against ('" + queryString + "' in boolean mode)"
+			SQLCountString = basicSQLCountString + " where match(Title_type, Primary_title, Original_title, Genres) against ('" + queryString + "' in boolean mode)"
 			isFirstCondition = false
 		} else {
-			SQLQueryString = SQLQueryString + " and match(Title_type, Primary_title, Original_title, Genres) against (" + queryString + " in boolean mode)"
-			SQLCountString = SQLCountString + " and match(Title_type, Primary_title, Original_title, Genres) against (" + queryString + " in boolean mode)"
+			SQLQueryString = SQLQueryString + " and match(Title_type, Primary_title, Original_title, Genres) against ('" + queryString + "' in boolean mode)"
+			SQLCountString = SQLCountString + " and match(Title_type, Primary_title, Original_title, Genres) against ('" + queryString + "' in boolean mode)"
 		}
 	}
 
@@ -136,6 +136,11 @@ func CreateTitleASSQLString(queryString string, tconst string, isAdult string, s
 		}
 	}
 
+	if isFirstCondition {
+		SQLQueryString = basicSQLQueryString
+		SQLCountString = basicSQLCountString
+	}
+
 	return SQLCountString, SQLQueryString
 }
 
@@ -148,19 +153,19 @@ func CreateNameASSQLString(queryString string, nconst string, birthYearStart str
 	basicSQLCountString := "select count(*) from name_basics"
 
 	if nconst != "" {
-		SQLQueryString = basicSQLQueryString + " where nconst = " + nconst
-		SQLCountString = basicSQLCountString + " where nconst = " + nconst
+		SQLQueryString = basicSQLQueryString + " where nconst = '" + nconst + "'"
+		SQLCountString = basicSQLCountString + " where nconst = '" + nconst + "'"
 		return SQLCountString, SQLQueryString
 	}
 
 	if queryString != "" {
 		if isFirstCondition {
-			SQLQueryString = basicSQLQueryString + " where match(Primary_name, Primary_profession) against (" + queryString + " in boolean mode)"
-			SQLCountString = basicSQLCountString + " where match(Primary_name, Primary_profession) against (" + queryString + " in boolean mode)"
+			SQLQueryString = basicSQLQueryString + " where match(Primary_name, Primary_profession) against ('" + queryString + "' in boolean mode)"
+			SQLCountString = basicSQLCountString + " where match(Primary_name, Primary_profession) against ('" + queryString + "' in boolean mode)"
 			isFirstCondition = false
 		} else {
-			SQLQueryString = SQLQueryString + " and match(Primary_name, Primary_profession) against (" + queryString + " in boolean mode)"
-			SQLCountString = SQLCountString + " and match(Primary_name, Primary_profession) against (" + queryString + " in boolean mode)"
+			SQLQueryString = SQLQueryString + " and match(Primary_name, Primary_profession) against ('" + queryString + "' in boolean mode)"
+			SQLCountString = SQLCountString + " and match(Primary_name, Primary_profession) against ('" + queryString + "' in boolean mode)"
 		}
 	}
 
@@ -207,6 +212,11 @@ func CreateNameASSQLString(queryString string, nconst string, birthYearStart str
 			SQLQueryString = SQLQueryString + " and Death_year <= " + deathYearEnd
 			SQLCountString = SQLCountString + " and Death_year <= " + deathYearEnd
 		}
+	}
+
+	if isFirstCondition {
+		SQLQueryString = basicSQLQueryString
+		SQLCountString = basicSQLCountString
 	}
 
 	return SQLCountString, SQLQueryString

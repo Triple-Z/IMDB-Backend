@@ -18,4 +18,8 @@ const (
 		Cross-Origin Resource Sharing(CORS) support.
 	*/
 	AllowCORS = true
+	/*
+		Release mode or debug mode for Gin.
+	*/
+	ReleaseMode = false
 )
