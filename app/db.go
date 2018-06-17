@@ -7,7 +7,8 @@ import (
 )
 
 func DbInit() *sql.DB {
-	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/imdb?parseTime=true&charset=utf8")
+	//db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/imdb?parseTime=true&charset=utf8")
+	db, err := sql.Open("mysql", DBUserName+":"+DBUserPassword+"@tcp("+DBAddress+":"+DBPort+")/"+UseDBName+"?parseTime=true&charset=utf8")
 	checkNormalError(err)
 
 	err = db.Ping()

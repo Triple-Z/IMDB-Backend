@@ -5,6 +5,8 @@
 <!-- TOC -->
 
 - [IMDB Backend](#imdb-backend)
+    - [Database Migration](#database-migration)
+    - [General Settings](#general-settings)
     - [API References](#api-references)
         - [Search](#search)
             - [Fuzzy search titles](#fuzzy-search-titles)
@@ -62,6 +64,31 @@
                 - [Response](#response-18)
 
 <!-- /TOC -->
+
+## Database Migration
+
+Recommand procedure:
+
+```sql
+# Before the migration
+sql> SET autocommit = 0;
+sql> SET unique_checks = 0;
+sql> SET foreign_key_checks = 0;
+# Start the migration
+sql> CREATE DATABASE imdb;
+sql> USE imdb;
+sql> SOURCE your_sql_file.sql;
+# After the migration
+sql> COMMIT;
+sql> SET unique_checks = 1;
+sql> SET foreign_key_checks = 1;
+```
+
+## General Settings
+
+All settings in [app/settings.go](app/settings.go) .
+
+> Including database settings.
 
 ## API References
 
