@@ -2,7 +2,6 @@ package main
 
 import (
 	"./app"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +16,8 @@ func main() {
 	}
 
 	if app.AllowCORS {
-		router.Use(cors.Default())
+		//router.Use(cors.Default())  // There has a bug in this cros version
+		router.Use(CORS())
 	}
 
 	apiV1Root := router.Group("/api/v1")
@@ -65,4 +65,11 @@ func main() {
 
 	router.Run(":2333")
 
+}
+
+func CORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Add("Access-Control-Allow-Origin", "*")
+		c.Next()
+	}
 }
