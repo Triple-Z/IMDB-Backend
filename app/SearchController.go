@@ -96,6 +96,7 @@ func FuzzySearchTitles(c *gin.Context) {
 	if len(titles) == 0 && FuzzyBrutalForceSearch {
 		// Fulltext search failed
 		// Brute-force method
+		log.Println("Enter titles brutal-force search...")
 
 		row := db.QueryRow("select count(*) from title_basics	where Primary_title like concat('%', ?, '%') or  Original_title like concat('%', ?, '%') or  Genres like concat('%', ?, '%') or Title_type like concat('%', ?, '%')", queryString, queryString, queryString, queryString)
 		row.Scan(&totalRows)
@@ -255,8 +256,9 @@ func FuzzySearchNames(c *gin.Context) {
 	if len(names) == 0 && FuzzyBrutalForceSearch {
 		// Fulltext search failed
 		// Brute-force method
+		log.Println("Enter names brutal-force search...")
 
-		row := db.QueryRow("select count(*) from title_basics	where Primary_title like concat('%', ?, '%') or  Original_title like concat('%', ?, '%') or  Genres like concat('%', ?, '%') or Title_type like concat('%', ?, '%')", queryString, queryString, queryString, queryString)
+		row := db.QueryRow("select count(*) from name_basics where Primary_name like concat('%', ?, '%') or  Primary_profession like concat('%', ?, '%');", queryString, queryString)
 		row.Scan(&totalRows)
 		log.Println(totalRows)
 
@@ -276,7 +278,7 @@ func FuzzySearchNames(c *gin.Context) {
 
 		startRow := (queryPage - 1) * rowsTitlePerPage
 
-		rows, err := db.Query("select * from name_basics where Primary_name l	ike concat('%', ?, '%') or  Primary_profession like concat('%', ?, '%') order by Primary_name like concat(?, '%') desc, ifnull(nullif(instr(Primary_name, concat(' ', ?)), 0), 99999), ifnull(nullif(instr(Primary_name, ?), 0), 99999), Primary_name, Primary_profession like concat(?, '%') desc, ifnull(nullif(instr(Primary_profession, concat(' ', ?)), 0), 99999), ifnull(nullif(instr(Primary_profession, ?), 0), 99999), Primary_profession limit ?, ?", queryString, queryString, queryString, queryString, queryString, queryString, queryString, queryString, startRow, rowsTitlePerPage)
+		rows, err := db.Query("select * from name_basics where Primary_name like concat('%', ?, '%') or  Primary_profession like concat('%', ?, '%') order by Primary_name like concat(?, '%') desc, ifnull(nullif(instr(Primary_name, concat(' ', ?)), 0), 99999), ifnull(nullif(instr(Primary_name, ?), 0), 99999), Primary_name, Primary_profession like concat(?, '%') desc, ifnull(nullif(instr(Primary_profession, concat(' ', ?)), 0), 99999), ifnull(nullif(instr(Primary_profession, ?), 0), 99999), Primary_profession limit ?, ?", queryString, queryString, queryString, queryString, queryString, queryString, queryString, queryString, startRow, rowsTitlePerPage)
 		if errCode := checkSQLError(err); errCode != 0 {
 			switch errCode {
 			case 1:
