@@ -13,55 +13,55 @@
                 - [Parameters](#parameters)
                 - [Response](#response)
             - [Fuzzy search names](#fuzzy-search-names)
-                - [Parameters](#parameters-1)
-                - [Response](#response-1)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Advanced search titles](#advanced-search-titles)
-                - [Parameters](#parameters-2)
-                - [Response](#response-2)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Advanced search names](#advanced-search-names)
-                - [Parameters](#parameters-3)
-                - [Response](#response-3)
+                - [Parameters](#parameters)
+                - [Response](#response)
         - [Titles](#titles)
             - [List titles](#list-titles)
-                - [Parameters](#parameters-4)
-                - [Response](#response-4)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Get a title](#get-a-title)
-                - [Response](#response-5)
+                - [Response](#response)
             - [Create a title](#create-a-title)
-                - [Parameters](#parameters-5)
-                - [Response](#response-6)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Update a title](#update-a-title)
-                - [Parameters](#parameters-6)
-                - [Response](#response-7)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Delete a title](#delete-a-title)
-                - [Response](#response-8)
+                - [Response](#response)
             - [Get a title details](#get-a-title-details)
-                - [Response](#response-9)
+                - [Response](#response)
         - [Names](#names)
             - [List names](#list-names)
-                - [Parameters](#parameters-7)
-                - [Response](#response-10)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Get a name](#get-a-name)
-                - [Response](#response-11)
+                - [Response](#response)
             - [Create a name](#create-a-name)
-                - [Parameters](#parameters-8)
-                - [Response](#response-12)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Update a name](#update-a-name)
-                - [Parameters](#parameters-9)
-                - [Response](#response-13)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Delete a name](#delete-a-name)
-                - [Response](#response-14)
+                - [Response](#response)
         - [Principals](#principals)
             - [Get a principal](#get-a-principal)
-                - [Response](#response-15)
+                - [Response](#response)
             - [Create a principal](#create-a-principal)
-                - [Parameters](#parameters-10)
-                - [Response](#response-16)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Update a principal](#update-a-principal)
-                - [Parameters](#parameters-11)
-                - [Response](#response-17)
+                - [Parameters](#parameters)
+                - [Response](#response)
             - [Delete a principal](#delete-a-principal)
-                - [Response](#response-18)
+                - [Response](#response)
 
 <!-- /TOC -->
 
@@ -448,14 +448,11 @@ GET /api/v1/advanced_search/names
 | Name | Type | Description |
 |:----:|:----:| :-----: |
 |`q` | `string`| 待搜索字段（支持布尔表达式） |
-|`tconst` | `string` | 影片唯一标识号 |
-|`isAdult` | `string` | 成人分类标识|
-|`startYearStart` | `int` | 影片/电视剧开始年份的起始值|
-|`startYearEnd` | `int` | 影片/电视剧开始年份的结束值|
-|`endYearStart` | `int` | 电视剧结束年份的起始值|
-|`endYearEnd` | `int` | 电视剧结束年份的结束值|
-|`runtimeMinStart` | `int` | 影片持续时间的起始值|
-|`runtimeMinEnd` | `int` | 影片持续时间的结束值|
+|`nconst` | `string` | 人物唯一标识号 |
+|`birthYearStart` | `int` | 人物出生年的起始值|
+|`birthYearEnd` | `int` | 人物出生年的结束值|
+|`deathYearStart` | `int` | 人物去世年的起始值|
+|`deathYearEnd` | `int` | 人物去世年的结束值|
 |`page`| `int` | 当前请求的页号 |
 
 > 以上值都为非必需，若值为空可以不传。
