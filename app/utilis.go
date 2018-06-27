@@ -8,13 +8,18 @@ import (
 func checkSQLError(err error) uint16 {
 	// check SQL driver error
 	if driverErr, ok := err.(*mysql.MySQLError); ok {
-		log.Fatalln(err.Error())
+		log.Println(err.Error())
 		return driverErr.Number
 	}
 
 	// check normal & SQL error
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Println(err.Error())
+
+		if err.Error() == "sql: no rows in result set" {
+			return 2
+		}
+
 		return 1
 	}
 
@@ -24,7 +29,7 @@ func checkSQLError(err error) uint16 {
 
 func checkNormalError(err error) bool {
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Println(err.Error())
 		return true
 	} else {
 		return false
