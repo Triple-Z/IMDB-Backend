@@ -11,6 +11,8 @@ import (
 
 type TitleDetailSQL struct {
 	Id          sql.NullInt64
+	TitleId     sql.NullInt64
+	TConst      sql.NullString
 	NameId      sql.NullInt64
 	NConst      sql.NullString
 	Ordering    sql.NullInt64
@@ -51,7 +53,7 @@ func ReadTitleDetails(c *gin.Context) {
 
 	// No need for pagination
 
-	rows, err := db.Query("select title_principals.id, title_principals.Ordering, name_basics.id, name_basics.nconst, name_basics.Primary_name, title_principals.Category, title_principals.Job, title_principals.Characters from title_basics join title_principals on title_basics.tconst = title_principals.tconst join name_basics on title_principals.nconst = name_basics.nconst where title_basics.id=? order by Ordering", id)
+	rows, err := db.Query("select title_principals.id, title_basics.tconst, title_basics.id, title_principals.Ordering, name_basics.id, name_basics.nconst, name_basics.Primary_name, title_principals.Category, title_principals.Job, title_principals.Characters from title_basics join title_principals on title_basics.tconst = title_principals.tconst join name_basics on title_principals.nconst = name_basics.nconst where title_basics.id=? order by Ordering", id)
 
 	if errCode := checkSQLError(err); errCode != 0 {
 		switch errCode {
@@ -70,7 +72,7 @@ func ReadTitleDetails(c *gin.Context) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.Scan(&titleDetailSQL.Id, &titleDetailSQL.Ordering, &titleDetailSQL.NameId, &titleDetailSQL.NConst, &titleDetailSQL.PrimaryName, &titleDetailSQL.Category, &titleDetailSQL.Job, &titleDetailSQL.Characters)
+		err := rows.Scan(&titleDetailSQL.Id, &titleDetailSQL.TConst, &titleDetailSQL.TitleId, &titleDetailSQL.Ordering, &titleDetailSQL.NameId, &titleDetailSQL.NConst, &titleDetailSQL.PrimaryName, &titleDetailSQL.Category, &titleDetailSQL.Job, &titleDetailSQL.Characters)
 		if errCode := checkSQLError(err); errCode != 0 {
 			switch errCode {
 			case 1:
