@@ -63,6 +63,7 @@
                 - [Response](#response)
             - [Delete a principal](#delete-a-principal)
                 - [Response](#response)
+    - [Copyright](#copyright)
 
 <!-- /TOC -->
 
@@ -1089,3 +1090,11 @@ DELETE /api/v1/principals/:id
 ```text
 Status: 204 No Content
 ```
+
+## Copyright
+
+This project is licensed under `BSD 3-Clause` license.
+
+[BSD 3-Clause License](LICENSE.md)
+
+Copyright &copy; 2018 Zhenzhen Zhao
