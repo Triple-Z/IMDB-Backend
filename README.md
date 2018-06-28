@@ -907,6 +907,14 @@ Status: 200 OK
                 "Int64": 3295656,
                 "Valid": true
             },
+            "TitleId": {
+                "Int64": 458041,
+                "Valid": true
+            },
+            "TConst": {
+                "String": "tt0475784",
+                "Valid": true
+            },
             "Ordering": {
                 "Int64": 1,
                 "Valid": true
@@ -936,6 +944,14 @@ Status: 200 OK
         {
             "Id": {
                 "Int64": 3295655,
+                "Valid": true
+            },
+            "TitleId": {
+                "Int64": 458041,
+                "Valid": true
+            },
+            "TConst": {
+                "String": "tt0475784",
                 "Valid": true
             },
             "NameId": {
