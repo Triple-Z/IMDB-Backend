@@ -5,6 +5,7 @@
 <!-- TOC -->
 
 - [IMDB Backend](#imdb-backend)
+    - [Source Database SQL File](#source-database-sql-file)
     - [Database Migration](#database-migration)
     - [General Settings](#general-settings)
     - [API References](#api-references)
@@ -65,6 +66,10 @@
 
 <!-- /TOC -->
 
+## Source Database SQL File
+
+There are too large to upload (6.7 GiB in total), so I will give the link later.
+
 ## Database Migration
 
 Recommand procedure:
@@ -84,6 +89,16 @@ sql> SET unique_checks = 1;
 sql> SET foreign_key_checks = 1;
 ```
 
+Or:
+
+```bash
+$ cat default-start-import.sql your_sql_file.sql default-end-import.sql | mysql -h db_address -P db_port -uroot -p your_db_name
+```
+
+from the command line.
+
+> Turn off `extended-insert` when you dumping your database, or it will be easily OOM(Out Of Memory) in the importing procedure.
+
 ## General Settings
 
 All settings in [app/settings.go](app/settings.go) .
@@ -92,7 +107,7 @@ All settings in [app/settings.go](app/settings.go) .
 
 ## API References
 
-API root: http://localhost:2333
+API root: http://localhost:2333/api/v1
 
 ### Search
 
@@ -171,57 +186,6 @@ Status: 200 OK
                 "Time": "2018-06-12T22:14:51Z",
                 "Valid": true
             }
-        },
-        ...  // These lines have been omitted
-        {
-            "Id": {
-                "Int64": 4115389,
-                "Valid": true
-            },
-            "TConst": {
-                "String": "tt6528044",
-                "Valid": true
-            },
-            "TitleType": {
-                "String": "tvEpisode",
-                "Valid": true
-            },
-            "PrimaryTitle": {
-                "String": "WestWorld",
-                "Valid": true
-            },
-            "OriginalTitle": {
-                "String": "WestWorld",
-                "Valid": true
-            },
-            "IsAdult": {
-                "Bool": false,
-                "Valid": true
-            },
-            "StartYear": {
-                "Int64": 2016,
-                "Valid": true
-            },
-            "EndYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "RuntimeMinutes": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "Genres": {
-                "String": "Comedy",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T22:14:51Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T22:14:51Z",
-                "Valid": true
-            }
         }
     ],
     "next_page": 2,
@@ -285,45 +249,6 @@ Status: 200 OK
             },
             "KnownForTitles": {
                 "String": "tt0482571,tt1375666,tt0816692,tt0154506",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            }
-        },
-        ...  // These lines have been omitted
-        {
-            "Id": {
-                "Int64": 600795,
-                "Valid": true
-            },
-            "NConst": {
-                "String": "nm0634224",
-                "Valid": true
-            },
-            "PrimaryName": {
-                "String": "Bill Nolan",
-                "Valid": true
-            },
-            "BirthYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "DeathYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "PrimaryProfession": {
-                "String": "actor",
-                "Valid": true
-            },
-            "KnownForTitles": {
-                "String": "tt0116322",
                 "Valid": true
             },
             "CreateDate": {
@@ -505,83 +430,6 @@ Status: 200 OK
                 "Time": "2018-06-12T23:01:04Z",
                 "Valid": true
             }
-        },
-        ...  // These lines have been omitted.
-        {
-            "Id": {
-                "Int64": 4764388,
-                "Valid": true
-            },
-            "NConst": {
-                "String": "nm5279037",
-                "Valid": true
-            },
-            "PrimaryName": {
-                "String": "Evan Kopczyk",
-                "Valid": true
-            },
-            "BirthYear": {
-                "Int64": 1992,
-                "Valid": true
-            },
-            "DeathYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "PrimaryProfession": {
-                "String": "miscellaneous,editorial_department,actor",
-                "Valid": true
-            },
-            "KnownForTitles": {
-                "String": "tt1793223,tt1094666,tt1831806,tt2882174",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            }
-        },
-        {
-            "Id": {
-                "Int64": 4780054,
-                "Valid": true
-            },
-            "NConst": {
-                "String": "nm5295960",
-                "Valid": true
-            },
-            "PrimaryName": {
-                "String": "Evan Chester",
-                "Valid": true
-            },
-            "BirthYear": {
-                "Int64": 1988,
-                "Valid": true
-            },
-            "DeathYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "PrimaryProfession": {
-                "String": "miscellaneous,actor",
-                "Valid": true
-            },
-            "KnownForTitles": {
-                "String": "tt5867314,tt2908446,tt2975590,tt2109248",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            }
         }
     ],
     "next_page": 2,
@@ -658,57 +506,6 @@ Status: 200 OK
             },
             "Genres": {
                 "String": "Documentary,Short",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T00:34:03Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T00:34:03Z",
-                "Valid": true
-            }
-        },
-        ...  // Some data have been omitted
-        {
-            "Id": {
-                "Int64": 20,
-                "Valid": true
-            },
-            "TConst": {
-                "String": "tt0000020",
-                "Valid": true
-            },
-            "TitleType": {
-                "String": "short",
-                "Valid": true
-            },
-            "PrimaryTitle": {
-                "String": "The Derby 1895",
-                "Valid": true
-            },
-            "OriginalTitle": {
-                "String": "The Derby 1895",
-                "Valid": true
-            },
-            "IsAdult": {
-                "Bool": false,
-                "Valid": true
-            },
-            "StartYear": {
-                "Int64": 1895,
-                "Valid": true
-            },
-            "EndYear": {
-                "Int64": 0,
-                "Valid": false
-            },
-            "RuntimeMinutes": {
-                "Int64": 1,
-                "Valid": true
-            },
-            "Genres": {
-                "String": "Documentary,Short,Sport",
                 "Valid": true
             },
             "CreateDate": {
@@ -939,45 +736,6 @@ Status: 200 OK
                 "String": "Dolores Abernathy",
                 "Valid": true
             }
-        },
-        ...  // These lines have been omitted
-        {
-            "Id": {
-                "Int64": 3295655,
-                "Valid": true
-            },
-            "TitleId": {
-                "Int64": 458041,
-                "Valid": true
-            },
-            "TConst": {
-                "String": "tt0475784",
-                "Valid": true
-            },
-            "NameId": {
-                "Int64": 438228,
-                "Valid": true
-            },
-            "Ordering": {
-                "Int64": 10,
-                "Valid": true
-            },
-            "PrimaryName": {
-                "String": "Sidse Babett Knudsen",
-                "Valid": true
-            },
-            "Category": {
-                "String": "actress",
-                "Valid": true
-            },
-            "Job": {
-                "String": "",
-                "Valid": false
-            },
-            "Characters": {
-                "String": "Theresa Cullen",
-                "Valid": true
-            }
         }
     ],
     "server_time": "2018-06-16T14:58:01.641212628+08:00"
@@ -1038,45 +796,6 @@ Status: 200 OK
             },
             "KnownForTitles": {
                 "String": "tt0050419,tt0072308,tt0043044,tt0045537",
-                "Valid": true
-            },
-            "CreateDate": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            },
-            "LastUpdated": {
-                "Time": "2018-06-12T23:01:04Z",
-                "Valid": true
-            }
-        },
-        ...  // Some data have been omitted
-        {
-            "Id": {
-                "Int64": 50,
-                "Valid": true
-            },
-            "NConst": {
-                "String": "nm0000050",
-                "Valid": true
-            },
-            "PrimaryName": {
-                "String": "Groucho Marx",
-                "Valid": true
-            },
-            "BirthYear": {
-                "Int64": 1890,
-                "Valid": true
-            },
-            "DeathYear": {
-                "Int64": 1977,
-                "Valid": true
-            },
-            "PrimaryProfession": {
-                "String": "soundtrack,actor,writer",
-                "Valid": true
-            },
-            "KnownForTitles": {
-                "String": "tt0026778,tt0023969,tt0022158,tt0032536",
                 "Valid": true
             },
             "CreateDate": {

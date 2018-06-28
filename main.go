@@ -22,6 +22,8 @@ func main() {
 
 	apiV1Root := router.Group("/api/v1")
 	{
+		apiV1Root.GET("", app.APIRoot)
+
 		titleApis := apiV1Root.Group("/titles")
 		{
 			titleApis.GET("", app.ReadAllTitles)
