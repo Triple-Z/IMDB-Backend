@@ -69,7 +69,12 @@
 
 ## Source Database SQL File
 
-There are too large to upload (6.7 GiB in total), so I will give the link later.
+The data source is [IMDb](https://www.imdb.com/) and all the data in the SQL file is up to `2018.06.01` .
+
+Here is the SQL file link: https://pan.baidu.com/s/1WcZZB7j-nbMRhp4MwZhRXA
+> Password：h3zj
+
+**Attention:** If your machine has enough memory (>= 4 GiB),  you should use the `imdb_2018_06_01_extended_insert.sql` file to increase the import speed. Otherwise, use `imdb_2018_06_01.sql` file in case of OOM (Out of Memory) .
 
 ## Database Migration
 
