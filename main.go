@@ -28,9 +28,9 @@ func main() {
 		{
 			titleApis.GET("", app.ReadAllTitles)
 			titleApis.GET("/:id", app.ReadSingleTitle)
-			titleApis.POST("", app.CreateTitle)
-			titleApis.PUT("/:id", app.UpdateTitle)
-			titleApis.DELETE("/:id", app.DeleteTitle)
+			//titleApis.POST("", app.CreateTitle)
+			//titleApis.PUT("/:id", app.UpdateTitle)
+			//titleApis.DELETE("/:id", app.DeleteTitle)
 
 			titleApis.GET("/:id/details", app.ReadTitleDetails)
 		}
@@ -39,9 +39,9 @@ func main() {
 		{
 			nameApis.GET("", app.ReadAllNames)
 			nameApis.GET("/:id", app.ReadSingleName)
-			nameApis.POST("", app.CreateName)
-			nameApis.PUT("/:id", app.UpdateName)
-			nameApis.DELETE("/:id", app.DeleteName)
+			//nameApis.POST("", app.CreateName)
+			//nameApis.PUT("/:id", app.UpdateName)
+			//nameApis.DELETE("/:id", app.DeleteName)
 		}
 
 		fuzzySearchApis := apiV1Root.Group("/search")
@@ -59,9 +59,9 @@ func main() {
 		principalApis := apiV1Root.Group("/principals")
 		{
 			principalApis.GET("/:id", app.ReadSinglePrincipal)
-			principalApis.POST("", app.CreatePrincipal)
-			principalApis.PUT("/:id", app.UpdatePrincipal)
-			principalApis.DELETE("/:id", app.DeletePrincipal)
+			//principalApis.POST("", app.CreatePrincipal)
+			//principalApis.PUT("/:id", app.UpdatePrincipal)
+			//principalApis.DELETE("/:id", app.DeletePrincipal)
 		}
 	}
 
