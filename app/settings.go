@@ -3,6 +3,10 @@ package app
 const (
 	/********************** App Settings *****************************/
 	/*
+		The server serve port number.
+	 */
+	PortNumber = "2333"
+	/*
 		The `FuzzyBrutalForceSearch` option will improve the search result quality
 		but extend the response time heavily.
 	*/
@@ -19,6 +23,10 @@ const (
 		Cross-Origin Resource Sharing(CORS) support.
 	*/
 	AllowCORS = true
+	/*
+		CORS Access-Control-Allow-Origin field.
+	 */
+	CORSAllowOrigin = "*"
 	/*
 		Release mode or debug mode for Gin.
 	*/

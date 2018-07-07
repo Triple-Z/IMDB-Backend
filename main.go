@@ -16,7 +16,7 @@ func main() {
 	}
 
 	if app.AllowCORS {
-		//router.Use(cors.Default())  // There has a bug in this cros version
+		//router.Use(cors.Default())  // There has a bug in this cors version
 		router.Use(CORS())
 	}
 
@@ -65,13 +65,13 @@ func main() {
 		}
 	}
 
-	router.Run(":2333")
+	router.Run(":" + app.PortNumber)
 
 }
 
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", app.CORSAllowOrigin)
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
