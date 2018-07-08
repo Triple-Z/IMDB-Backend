@@ -20,7 +20,7 @@ func main() {
 		router.Use(CORS())
 	}
 
-	apiV1Root := router.Group("/api/v1")
+	apiV1Root := router.Group("/v1")
 	{
 		apiV1Root.GET("", app.APIRoot)
 

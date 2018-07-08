@@ -26,7 +26,7 @@ const (
 	/*
 		CORS Access-Control-Allow-Origin field.
 	 */
-	CORSAllowOrigin = "*"
+	CORSAllowOrigin = "imdb.triplez.cn, imdb.triplez.cn.cdn.dnsv1.com"
 	/*
 		Release mode or debug mode for Gin.
 	*/
@@ -35,15 +35,15 @@ const (
 	/*
 		Database user name.
 	*/
-	DBUserName = "root"
+	DBUserName = "imdb_pdbs"
 	/*
 		Database user password.
 	*/
-	DBUserPassword = ""
+	DBUserPassword = "imdb_pdbs"
 	/*
 		Database remote IP address.
 	*/
-	DBAddress = "127.0.0.1"
+	DBAddress = "10.0.1.16"
 	/*
 		Database remote port number.
 	*/
