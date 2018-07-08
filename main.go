@@ -1,4 +1,4 @@
-package IMDB_Backend
+package main
 
 import (
 	"./app"
