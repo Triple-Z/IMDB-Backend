@@ -24,10 +24,6 @@ const (
 	*/
 	AllowCORS = true
 	/*
-		CORS Access-Control-Allow-Origin field.
-	 */
-	CORSAllowOrigin = "imdb.triplez.cn, imdb.triplez.cn.cdn.dnsv1.com"
-	/*
 		Release mode or debug mode for Gin.
 	*/
 	ReleaseMode = false

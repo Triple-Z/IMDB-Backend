@@ -3,6 +3,8 @@ package main
 import (
 	"./app"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+	"time"
 )
 
 func main() {
@@ -16,13 +18,20 @@ func main() {
 	}
 
 	if app.AllowCORS {
-		//router.Use(cors.Default())  // There has a bug in this cors version
-		router.Use(CORS())
+		router.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"http://imdb.triplez.cn", "http://imdb.triplez.cn.cdn.dnsv1.com"},
+			AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"Origin"},
+			ExposeHeaders:    []string{"Content-Length"},
+			AllowCredentials: true,
+			MaxAge: 12 * time.Hour,
+		}))
+		//router.Use(CORS())
 	}
 
 	apiV1Root := router.Group("/v1")
 	{
-		apiV1Root.GET("", app.APIRoot)
+		apiV1Root.GET("/", app.APIRoot)
 
 		titleApis := apiV1Root.Group("/titles")
 		{
@@ -71,7 +80,7 @@ func main() {
 
 func CORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", app.CORSAllowOrigin)
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
