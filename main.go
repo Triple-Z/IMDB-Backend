@@ -3,8 +3,6 @@ package main
 import (
 	"./app"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/cors"
-	"time"
 )
 
 func main() {
@@ -18,15 +16,15 @@ func main() {
 	}
 
 	if app.AllowCORS {
-		router.Use(cors.New(cors.Config{
-			AllowOrigins:     []string{"http://imdb.triplez.cn", "http://imdb.triplez.cn.cdn.dnsv1.com"},
-			AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "OPTIONS"},
-			AllowHeaders:     []string{"Origin"},
-			ExposeHeaders:    []string{"Content-Length"},
-			AllowCredentials: true,
-			MaxAge: 12 * time.Hour,
-		}))
-		//router.Use(CORS())
+		//router.Use(cors.New(cors.Config{
+		//	AllowOrigins:     []string{"http://imdb.triplez.cn", "http://imdb.triplez.cn.cdn.dnsv1.com"},
+		//	AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "OPTIONS"},
+		//	AllowHeaders:     []string{"Origin"},
+		//	ExposeHeaders:    []string{"Content-Length"},
+		//	AllowCredentials: true,
+		//	MaxAge: 12 * time.Hour,
+		//}))
+		router.Use(CORS())
 	}
 
 	apiV1Root := router.Group("/v1")

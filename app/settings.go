@@ -31,15 +31,15 @@ const (
 	/*
 		Database user name.
 	*/
-	DBUserName = "imdb_pdbs"
+	DBUserName = "root"
 	/*
 		Database user password.
 	*/
-	DBUserPassword = "imdb_pdbs"
+	DBUserPassword = ""
 	/*
 		Database remote IP address.
 	*/
-	DBAddress = "10.0.1.16"
+	DBAddress = "127.0.0.1"
 	/*
 		Database remote port number.
 	*/
